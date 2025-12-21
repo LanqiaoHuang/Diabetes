@@ -2,4 +2,136 @@
 title: "README"
 output: html_document
 ---
+# Diabetes
 
+[![CRAN Status](https://www.r-pkg.org/badges/version/Diabetes)](https://cran.r-project.org/package=Diabetes)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![R build status](https://github.com/your_github_username/Diabetes/workflows/R-CMD-check/badge.svg)](https://github.com/your_github_username/Diabetes/actions)
+
+## Overview
+
+**Diabetes** is an R package designed to predict the risk of diabetes using pretrained machine learning models. It incorporates three popular algorithms: Random Forest, Logistic Regression, and Support Vector Machine (SVM). Users can easily input patient clinical features and obtain both the probability of diabetes risk and a binary classification result.
+
+This package eliminates the need for users to train models from scratch, providing a ready-to-use, reliable tool for diabetes risk assessment.
+
+---
+
+## Features
+
+- **Pretrained Models:** No need for model training; utilize well-validated pretrained models.  
+- **Multiple Algorithms:** Supports Random Forest, Logistic Regression, and SVM for flexible prediction.  
+- **Probability & Threshold:** Outputs probabilistic predictions with customizable classification thresholds.  
+- **User-Friendly Interface:** Simple input format and clear, interpretable output.  
+- **Extensible:** Easily integrate into larger clinical data analysis workflows.
+
+---
+
+## Installation
+
+The package is currently not available on CRAN. You can install the development version from GitHub using the `devtools` package:
+
+```r
+# Install devtools if not already installed
+install.packages("devtools")
+
+# Install Diabetes package from GitHub
+devtools::install_github("your_github_username/Diabetes")
+```
+Alternatively, to install from local source, navigate to the package root directory and run:
+```r
+devtools::install()
+```
+Usage
+The main function provided by this package is predict_diabetes(), which performs diabetes risk prediction based on patient features.
+
+Example
+```r
+# Sample patient data
+patient_data <- data.frame(
+  Pregnancies = c(2, 0),
+  Glucose = c(120, 85),
+  BloodPressure = c(70, 65),
+  SkinThickness = c(20, 30),
+  Insulin = c(79, 88),
+  BMI = c(31.0, 25.5),
+  DiabetesPedigreeFunction = c(0.5, 0.3),
+  Age = c(45, 32)
+)
+
+# Predict using the default Random Forest model
+pred_rf <- predict_diabetes(patient_data)
+print(pred_rf)
+
+# Predict using Logistic Regression model with threshold 0.4
+pred_glm <- predict_diabetes(patient_data, model_type = "glm", threshold = 0.4)
+print(pred_glm)
+
+# Predict using Support Vector Machine with threshold 0.6
+pred_svm <- predict_diabetes(patient_data, model_type = "svm", threshold = 0.6)
+print(pred_svm)
+```
+Function Reference
+predict_diabetes(newdata, threshold = 0.5, model_type = "rf")
+Description
+Predicts diabetes risk for new patient data using pretrained machine learning models.
+
+Arguments
+newdata
+A data.frame containing the patient features required for prediction. The following columns are mandatory:
+
+Feature	Type	Description
+Pregnancies	numeric	Number of times pregnant
+Glucose	numeric	Plasma glucose concentration
+BloodPressure	numeric	Diastolic blood pressure (mm Hg)
+SkinThickness	numeric	Triceps skin fold thickness (mm)
+Insulin	numeric	Serum insulin (mu U/ml)
+BMI	numeric	Body Mass Index
+DiabetesPedigreeFunction	numeric	Diabetes pedigree function
+Age	numeric	Age in years
+
+threshold
+Numeric value between 0 and 1 (default 0.5). Probability above this threshold is classified as "Yes" (diabetic), otherwise "No".
+
+model_type
+Character string specifying which pretrained model to use. Options are:
+
+"rf": Random Forest (default)
+"glm": Logistic Regression
+"svm": Support Vector Machine
+Returns
+A data.frame containing the original input features plus two additional columns:
+
+Pred_Prob: Predicted probability of diabetes (numeric, 0 to 1).
+Pred_Class: Predicted class label as a factor with levels "No" and "Yes".
+Details
+The function loads pretrained model objects stored inside the package and applies them to the new data. The SVM model is trained with probability estimates enabled for probabilistic output.
+
+Input data must be preprocessed correctly with no missing values to avoid errors.
+Dependencies
+The package relies on the following R packages, which will be installed automatically if missing:
+
+randomForest — for Random Forest model
+e1071 — for Support Vector Machine model
+stats — for Logistic Regression model (base R)
+Contributing
+Contributions to improve the package are most welcome! You can:
+
+Report bugs or request features via GitHub Issues
+Submit pull requests with enhancements or fixes
+Suggest new pretrained models or functionalities
+Please adhere to the code of conduct and ensure your contributions include appropriate documentation and tests.
+
+License
+This project is licensed under the MIT License.
+
+Contact
+For questions, suggestions, or support, please contact:
+
+Your Name
+Email: LanqiaoHuang@example.com
+GitHub: https://github.com/LanqiaoHuang
+
+Acknowledgements
+Thanks to all contributors and the open-source community for their support.
+
+Thank you for using the Diabetes R package! We hope it helps you gain valuable insights into diabetes risk prediction.
