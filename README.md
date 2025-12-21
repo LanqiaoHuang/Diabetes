@@ -1,22 +1,23 @@
-# Diabetes — 基于预训练模型的糖尿病风险预测包
+# Diabetes — A pre-trained model based diabetes risk prediction package
 
 [![CRAN Status](https://www.r-pkg.org/badges/version/Diabetes)](https://cran.r-project.org/package=Diabetes)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
 [![R build status](https://github.com/LanqiaoHuang/Diabetes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/LanqiaoHuang/Diabetes/actions)
-Diabetes 是一个轻量级的 R 包，提供基于预训练模型的糖尿病风险预测功能。用户无需自己训练模型，只需传入常见的临床/体征变量，即可得到概率型风险估计和二分类结果，方便快速集成到临床数据分析或科研流程中。
 
-数据库来源
+Diabetes is a lightweight R package that provides diabetes risk prediction based on pre-trained models. Users do not need to train models themselves — simply supply common clinical/phenotypic variables to obtain probability-based risk predictions.
+
+Data source
 ```r
 https://www.kaggle.com/datasets/kandij/diabetes-dataset/data
 ```
 ---
-## 结构
+## Structure
 ```r
-DiabetesPredictor/
+Diabetes/
 ├── DESCRIPTION
 ├── NAMESPACE
 ├── R/
-│   └── predict_diabetes.R   # 上面函数代码放这里
+│   └── main.R   # Put the function code here
 ├── inst/
 │   └── extdata/
 │       ├── diabetes_rf_model.rds
@@ -24,37 +25,31 @@ DiabetesPredictor/
 │       └── diabetes_svm_model.rds
 ```
 
+---
 
+## Highlights
 
-
-
-
+- ✨ Pre-trained models: ready to use out of the box, no training required  
+- ⚖️ Multiple algorithms: supports Random Forest (RF), Logistic Regression (GLM), and Support Vector Machine (SVM)  
+- 🎯 Customizable threshold: returns probabilities and allows a custom classification threshold  
+- 🔌 Easy integration: returns a clean data.frame for downstream analysis or visualization  
+- 🧪 Suitable for quick prototyping and small-scale clinical data evaluation
 
 ---
 
-## 亮点
+## Installation
 
-- ✨ 预训练模型：开箱即用，无需训练  
-- ⚖️ 多种算法：支持随机森林（RF）、逻辑回归（GLM）和支持向量机（SVM）  
-- 🎯 可定制阈值：返回概率并允许自定义分类阈值  
-- 🔌 易于集成：返回清晰的 data.frame，方便后续分析或可视化  
-- 🧪 适合快速原型与小规模临床数据评估
-
----
-
-## 安装
-
-当前版本尚未发布到 CRAN。可从 GitHub 安装开发版：
+The current version is not yet published on CRAN. You can install the development version from GitHub:
 
 ```r
-# 仅需运行一次以安装 devtools（若尚未安装）
+# Run once to install devtools (if not already installed)
 install.packages("devtools")
 
-# 从 GitHub 安装
+# Install from GitHub
 devtools::install_github("LanqiaoHuang/Diabetes")
 ```
 
-安装后载入包：
+After installation, load the package:
 
 ```r
 library(Diabetes)
@@ -62,12 +57,12 @@ library(Diabetes)
 
 ---
 
-## 快速开始（示例）
+## Quick start (example)
 
-下面示例展示如何使用默认的随机森林模型进行预测，并查看概率与分类结果：
+The example below shows how to use the default Random Forest model to predict and view probabilities and classification results:
 
 ```r
-# 构造示例病人数据
+# Construct example patient data
 patient_data <- data.frame(
   Pregnancies = c(2, 0),
   Glucose = c(120, 85),
@@ -79,16 +74,16 @@ patient_data <- data.frame(
   Age = c(45, 32)
 )
 
-# 使用默认模型 (随机森林)，默认阈值 0.5
+# Use the default model (random forest), default threshold 0.5
 pred_rf <- predict_diabetes(patient_data)
 print(pred_rf)
 ```
 
-输出将包含原始特征 + 两列：
-- `Pred_Prob`：糖尿病预测概率（0–1）
-- `Pred_Class`：二分类结果，取值为 `"No"` 或 `"Yes"`
+The output will contain the original features plus two columns:
+- `Pred_Prob`: predicted probability of diabetes (0–1)
+- `Pred_Class`: binary classification result, values `"No"` or `"Yes"`
 
-可指定模型与阈值：
+You can specify model and threshold:
 
 ```r
 pred_glm <- predict_diabetes(patient_data, model_type = "glm", threshold = 0.4)
@@ -97,68 +92,74 @@ pred_svm <- predict_diabetes(patient_data, model_type = "svm", threshold = 0.6)
 
 ---
 
-## 函数参考
+## Function Reference
 
 ### predict_diabetes(newdata, threshold = 0.5, model_type = "rf")
-用？predict_diabetes ask for help
-描述：基于包内预训练模型对新病人数据进行糖尿病风险预测，返回概率与二分类结果。
+Use `?predict_diabetes` for help.  
+```r
+??predict_diabetes
+```
 
-参数：
-- `newdata`（data.frame）：必须包含以下列（大小写敏感）  
-  - `Pregnancies`（numeric）：怀孕次数  
-  - `Glucose`（numeric）：血浆葡萄糖浓度  
-  - `BloodPressure`（numeric）：舒张压（mm Hg）  
-  - `SkinThickness`（numeric）：三头肌皮褶厚度（mm）  
-  - `Insulin`（numeric）：胰岛素（mu U/ml）  
-  - `BMI`（numeric）：体质指数  
-  - `DiabetesPedigreeFunction`（numeric）：糖尿病家族史函数值  
-  - `Age`（numeric）：年龄（岁）
+Description: Predicts diabetes risk for new patients using the package's pre-trained models, returning probabilities and binary classifications.
 
-- `threshold`（numeric，0–1）：概率大于该阈值则判为 `"Yes"`（默认 0.5）  
-- `model_type`（character）：选择的预训练模型，支持 `"rf"`（随机森林，默认）、`"glm"`（逻辑回归）、`"svm"`（支持向量机）
+Parameters:
+- `newdata` (data.frame): Must contain the following columns (case-sensitive)  
+  - `Pregnancies` (numeric): Number of pregnancies  
+  - `Glucose` (numeric): Plasma glucose concentration  
+  - `BloodPressure` (numeric): Diastolic blood pressure (mm Hg)  
+  - `SkinThickness` (numeric): Triceps skinfold thickness (mm)  
+  - `Insulin` (numeric): 2-Hour serum insulin (mu U/ml)  
+  - `BMI` (numeric): Body mass index  
+  - `DiabetesPedigreeFunction` (numeric): Diabetes pedigree function  
+  - `Age` (numeric): Age (years)
 
-返回：包含原始特征及两列 `Pred_Prob`（概率）和 `Pred_Class`（因子："No"/"Yes"）的 data.frame。
+- `threshold` (numeric, 0–1): Samples with probability greater than this threshold are classified as `"Yes"` (default 0.5)  
+- `model_type` (character): Choice of pre-trained model, supported values: `"rf"` (random forest, default), `"glm"` (logistic regression), `"svm"` (support vector machine)
 
-注意：输入数据需完成必要的预处理（无缺失、数值类型正确等），以避免报错。
+Returns: A data.frame containing the original features plus two columns: `Pred_Prob` (probability) and `Pred_Class` (factor: `"No"`/`"Yes"`).
 
----
-
-## 依赖
-
-- randomForest — 随机森林模型  
-- e1071 — SVM（需启用概率估计）  
-- stats — 逻辑回归（R 基础包）
-
-这些依赖通常会在安装时被自动安装（若缺失）。
+Note: Input data must be preprocessed appropriately (no missing values, correct numeric types, etc.) to avoid errors.
 
 ---
 
-## 使用建议与注意事项
+## Dependencies
 
-- 若数据包含缺失值，请先进行填补或移除缺失样本。  
-- 预测结果为统计模型输出，应结合临床判断，不可单独用于诊断决策。  
-- 若计划在大型真实世界数据中使用，请先在目标人群上验证模型性能（AUC、灵敏度、特异度等）。
+- randomForest — Random Forest models  
+- e1071 — SVM (probability estimates must be enabled)  
+- stats — Logistic regression (base R)
 
----
-
-## 贡献
-
-欢迎提交 issue、feature request，或通过 pull request 贡献代码、改进预训练模型或增加更多评估指标。请遵循仓库中的贡献指南与行为准则（若有）。
+These dependencies are typically installed automatically during package installation if missing.
 
 ---
 
-## 许可证
+## Usage recommendations and notes
 
-本项目采用 MIT 许可证，详见 LICENSE 文件。
+- If your data contains missing values, please impute or remove missing samples first.  
+- Predictions are outputs of statistical models and should be used together with clinical judgment; they should not be used alone for diagnostic decisions.  
+- If you plan to use these models on large real-world datasets, validate model performance on the target population first (AUC, sensitivity, specificity, etc.).
 
 ---
 
-## 联系
+## Contributing
 
-若有问题或合作意向，请联系：  
+Issues, feature requests, and pull requests to contribute code, improve pre-trained models, or add additional evaluation metrics are welcome. Please follow the repository's contribution guidelines and code of conduct (if available).
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+## Contact
+
+If you have questions or collaboration inquiries, please contact:  
 Lanqiao Huang — LanqiaoHuang@example.com  
-项目主页：<https://github.com/LanqiaoHuang/Diabetes>
+Project homepage: <https://github.com/LanqiaoHuang/Diabetes>
 
 ---
 
-感谢使用 Diabetes！如需我帮你生成 GitHub Actions CI 配置、包文档（pkgdown）或示例数据集，我可以继续协助。
+Thank you for using Diabetes! If you'd like, I can help generate a GitHub Actions CI configuration, package documentation (pkgdown), or an example dataset.
+```
+
