@@ -3,10 +3,32 @@
 [![CRAN Status](https://www.r-pkg.org/badges/version/Diabetes)](https://cran.r-project.org/package=Diabetes)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
 [![R build status](https://github.com/LanqiaoHuang/Diabetes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/LanqiaoHuang/Diabetes/actions)
-
-简洁 · 可靠 · 易用
-
 Diabetes 是一个轻量级的 R 包，提供基于预训练模型的糖尿病风险预测功能。用户无需自己训练模型，只需传入常见的临床/体征变量，即可得到概率型风险估计和二分类结果，方便快速集成到临床数据分析或科研流程中。
+
+数据库来源
+```r
+https://www.kaggle.com/datasets/kandij/diabetes-dataset/data
+```
+---
+## 结构
+```r
+DiabetesPredictor/
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+│   └── predict_diabetes.R   # 上面函数代码放这里
+├── inst/
+│   └── extdata/
+│       ├── diabetes_rf_model.rds
+│       ├── diabetes_glm_model.rds
+│       └── diabetes_svm_model.rds
+```
+
+
+
+
+
+
 
 ---
 
@@ -78,7 +100,7 @@ pred_svm <- predict_diabetes(patient_data, model_type = "svm", threshold = 0.6)
 ## 函数参考
 
 ### predict_diabetes(newdata, threshold = 0.5, model_type = "rf")
-
+用？predict_diabetes ask for help
 描述：基于包内预训练模型对新病人数据进行糖尿病风险预测，返回概率与二分类结果。
 
 参数：
