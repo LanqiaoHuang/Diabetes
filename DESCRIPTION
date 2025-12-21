@@ -1,0 +1,19 @@
+Package: Diabetes
+Type: Package
+Title: Diabetes Risk Prediction Using Pretrained Machine Learning Models
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Lanqiao", 
+           family = "Huang", 
+           role = c("aut", "cre"), 
+           email = "Lanqiao.Huang@example.com")
+Description: Provides functions to predict diabetes risk using pretrained Random Forest, Logistic Regression, and Support Vector Machine models. Supports probability predictions and flexible classification thresholds.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    randomForest,
+    e1071,
+    stats
+RoxygenNote: 7.3.3
+Depends: R (>= 3.5.0)
