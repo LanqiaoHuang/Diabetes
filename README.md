@@ -10,6 +10,18 @@ Data source
 ```r
 https://www.kaggle.com/datasets/kandij/diabetes-dataset/data
 ```
+
+---
+## Module performance
+The discriminative capability of the model was further validated by the ROC curve
+(Figure 1). The model achieved an AUC (Area Under the Curve) of 0.85, indicating a
+strong ability to distinguish between diabetic and non-diabetic patients. The Precision- Recall (PRC) AUC was 0.70, reflecting reliable performance even in the context of class
+imbalance
+<img width="1415" height="744" alt="image" src="https://github.com/user-attachments/assets/7f25a8d6-95e3-4992-970f-4753883daa4b" />
+
+
+
+
 ---
 ## Structure
 ```r
