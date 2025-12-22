@@ -109,7 +109,7 @@ pred_svm <- predict_diabetes(patient_data, model_type = "svm", threshold = 0.6)
 ### predict_diabetes(newdata, threshold = 0.5, model_type = "rf")
 Use `?predict_diabetes` for help.  
 ```r
-??predict_diabetes
+?predict_diabetes
 ```
 
 Description: Predicts diabetes risk for new patients using the package's pre-trained models, returning probabilities and binary classifications.
