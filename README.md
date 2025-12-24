@@ -64,6 +64,7 @@ devtools::install_github("LanqiaoHuang/Diabetes")
 After installation, load the package:
 
 ```r
+library(randomForest)
 library(Diabetes)
 ```
 
